@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "Henoc Hernandez",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -10,6 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^3.4.3"
+    "@lucia-auth/adapter-postgresql": "^2.0.2",
+    "astro": "^3.4.3",
+    "lucia": "^2.7.3"
   }
 }

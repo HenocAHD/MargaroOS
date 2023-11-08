@@ -1,0 +1,21 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/manjaro-logo.png";
+---
+
+<section id:"google" class="logo">
+  <Image src={logo} alt="Margaro Logo" width={40} height={40} />
+  <span>Margaro OS</span>
+</section>
+
+<style>
+  .logo {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    padding-bottom: 2rem;
+  }
+</style>
