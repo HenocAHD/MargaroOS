@@ -1,0 +1,68 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<header class="top-bar">
+  <span></span>
+  <h2>{title}</h2>
+  <button id=`close-${title}`
+    ><i class="fa-solid fa-circle-xmark" style="color: white"></i></button
+  >
+</header>
+
+<style>
+  header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 35px;
+    background-color: var(--bg-black);
+    cursor: move;
+    border-radius: 15px 15px 0 0;
+  }
+  h2 {
+    color: white;
+  }
+  button{
+    background: transparent;
+    border: none;
+  }
+</style>
+
+<script>
+  const $topBar = document.querySelector(".top-bar") as HTMLElement;
+
+  const dragDiv = document.querySelector(".window") as HTMLElement;
+
+  
+  let isDragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  // Agrega un evento al div para iniciar el arrastre
+  $topBar.addEventListener("mousedown", (e: MouseEvent) => {
+    isDragging = true;
+    offsetX = e.clientX - (dragDiv!.getBoundingClientRect().left || 0);
+    offsetY = e.clientY - (dragDiv!.getBoundingClientRect().top || 0);
+  });
+
+  // Agrega un evento al documento para continuar el arrastre
+  document.addEventListener("mousemove", (e: MouseEvent) => {
+    if (isDragging) {
+      if (dragDiv) {
+        dragDiv.style.left = e.clientX - offsetX + "px";
+        dragDiv.style.top = e.clientY - offsetY + "px";
+      }
+    }
+  });
+
+  // Agrega un evento al documento para finalizar el arrastre
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+</script>
