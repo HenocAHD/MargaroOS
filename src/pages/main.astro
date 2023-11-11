@@ -1,28 +1,43 @@
 ---
+import Dock from "../components/Dock.astro";
+import TopBar from "../components/TopBar.astro";
+import Layout from "../layouts/Layout.astro";
+import Calculator from "../components/Calculator.astro"
+
 // src/pages/index.astro
 // const session = await Astro.locals.auth.validate();
 // if (!session) return Astro.redirect("/login", 302);
 
 //activar cuando este listo la entrada
-
-import TopBar from "../components/TopBar.astro";
-import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="MargaroOs">
-
+<Layout title="Margaro OS">
     <main>
         <TopBar />
+        <section id="work-area">
+            <Calculator/>
+        </section>
+        <Dock />
     </main>
 </Layout>
 
-
 <style>
     main{
-        background-image: url('../assets/bg-image.jpg');
-        background-position: center;
-        background-size: cover;
         width: 100%;
         height: 100vh;
+        max-width: 100%;
+        max-height: 100vh;
+        background-image: url("../assets/bg-image.jpg");
+        background-position: center;
+        background-size: cover;
     }
+
+    body{
+        overflow: hidden;
+    }
+    
 </style>
+
+<script>
+   
+</script>

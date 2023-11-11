@@ -1,0 +1,153 @@
+---
+import TopWindow from "./TopWindow.astro";
+---
+
+<section class="container-calc window">
+  <TopWindow title="Calculator" />
+  <div class="calculadora">
+    <div class="pantalla">0</div>
+    <button id="c" class="btn">C</button>
+    <button id="borrar" class="btn">←</button>
+    <button class="btn">/</button>
+    <button class="btn">*</button>
+    <button class="btn">7</button>
+    <button class="btn">8</button>
+    <button class="btn">9</button>
+    <button class="btn">-</button>
+    <button class="btn">4</button>
+    <button class="btn">5</button>
+    <button class="btn">6</button>
+    <button class="btn">+</button>
+    <button class="btn">1</button>
+    <button class="btn">2</button>
+    <button class="btn">3</button>
+    <button id="igual" class="btn">=</button>
+    <button id="cero" class="btn">0</button>
+    <button class="btn">.</button>
+  </div>
+</section>
+
+<style>
+  .container-calc {
+    position: fixed;
+    background-color: var(--bg-black-terminal);
+    top: 60px;
+    left: 30%;
+    width: 350px;
+    border-radius: 15px;
+    transition: opacity 0.1s ease-out;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+.container-calc.appear{
+    opacity: 1;
+    pointer-events: all;
+}
+
+  .calculadora {
+    background-color: #15173c;
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+    padding: 1rem;
+    border-radius: 0 0 15px 15px;
+    gap: 0.5rem;
+  }
+  .pantalla {
+    grid-column: 1/-1;
+    background-color: #090c31;
+    padding: 1.5rem;
+    font-size: 2rem;
+    text-align: right;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-family: monospace;
+    font-weight: 600;
+    overflow-x: hidden;
+  }
+  .btn {
+    background-color: #15173c;
+    color: white;
+    border: 0;
+    padding: 1.5rem 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #090c31;
+  }
+
+  #cero {
+    grid-column: span 2;
+  }
+
+  #igual {
+    grid-row: span 2;
+    background-color: #e6394a;
+  }
+  #igual:hover {
+    background-color: #e65766;
+  }
+</style>
+
+<script>
+  const $pantalla = document.querySelector(".pantalla");
+  const $botones = document.querySelectorAll(".btn");
+
+  $botones.forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const botonApretado = boton.textContent;
+
+      if (boton.id === "c") {
+        $pantalla.textContent = "0";
+        return;
+      }
+
+      if (boton.id === "borrar") {
+        if (
+          $pantalla.textContent.length === 1 ||
+          $pantalla.textContent === "Error"
+        ) {
+          $pantalla.textContent === "0";
+        } else {
+          $pantalla.textContent = $pantalla.textContent.slice(0, -1);
+        }
+        return;
+      }
+
+      if (boton.id === "igual") {
+        try {
+          $pantalla.textContent = eval($pantalla.textContent);
+        } catch {
+          $pantalla.textContent = "Error";
+        }
+        return;
+      }
+
+      if ($pantalla.textContent === "0" || $pantalla.textContent === "Error") {
+        $pantalla.textContent = botonApretado;
+      } else {
+        $pantalla.textContent += botonApretado;
+      }
+    });
+  });
+
+ 
+ //abrir y cerrar app
+ const $app = document.querySelector(".container-calc") as HTMLElement
+ const $btnApp = document.getElementById("btn-calculator")
+ const $btnClose = document.getElementById("close-Calculator")
+
+ $btnApp.addEventListener('click', ()=>{
+  $app.classList.add("appear")
+ })
+
+ $btnClose.addEventListener("click", ()=>{
+  $app.classList.remove("appear")
+ })
+</script>
