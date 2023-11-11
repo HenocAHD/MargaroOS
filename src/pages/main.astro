@@ -4,4 +4,25 @@
 // if (!session) return Astro.redirect("/login", 302);
 
 //activar cuando este listo la entrada
+
+import TopBar from "../components/TopBar.astro";
+import Layout from "../layouts/Layout.astro";
 ---
+
+<Layout title="MargaroOs">
+
+    <main>
+        <TopBar />
+    </main>
+</Layout>
+
+
+<style>
+    main{
+        background-image: url('../assets/bg-image.jpg');
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        height: 100vh;
+    }
+</style>
