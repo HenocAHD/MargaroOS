@@ -24,6 +24,9 @@ const { title } = Astro.props;
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <title>{title}</title>
   </head>
@@ -33,11 +36,13 @@ const { title } = Astro.props;
 </html>
 <style is:global>
   :root {
-    --bg-black: #2c2c2c;
+    --bg-black: #313f40;
+    --bg-green-transparent: #455154;
     --bg-black-terminal: #13151a;
     --text-color-green-terminal: #4af626;
     --bg-green: #20ecb4;
     --bg-gray-dark: #504c4c;
+    --white: #cccfd0;
   }
 
   *,
@@ -59,7 +64,7 @@ const { title } = Astro.props;
   html {
     line-height: 1.15; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
-    font-family: system-ui, sans-serif;
+    font-family: 'Comfortaa', sans-serif;
     box-sizing: border-box;
     background-color: var(--bg-black);
   }
