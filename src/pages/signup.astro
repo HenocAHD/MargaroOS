@@ -29,8 +29,8 @@ if (Astro.request.method === "POST") {
     typeof password === "string" &&
     password.length >= 6 &&
     password.length <= 255;
-	password === passwordRepeat;
-  if (validUsername && validPassword) {
+  const validPasswordRepeat = password === passwordRepeat;
+  if (validUsername && validPassword && validPasswordRepeat) {
     try {
       const user = await auth.createUser({
         key: {
@@ -54,7 +54,7 @@ if (Astro.request.method === "POST") {
       if (e instanceof LuciaError) {
         // user does not exist
         // or invalid password
-        errorMessage = "Usuario o contraseñas invalidas";
+        errorMessage = "Usuario o contraseñas incorrectad";
         Astro.response.status = 400;
       } else {
         errorMessage = e;
@@ -62,7 +62,12 @@ if (Astro.request.method === "POST") {
       }
     }
   } else {
-    errorMessage = "Invalid input";
+    if(!validPasswordRepeat) {
+      errorMessage = "Las contraseñas no coinciden"
+    }
+    else{
+      errorMessage = "Invalid input";
+    }
     Astro.response.status = 400;
   }
 
@@ -127,7 +132,7 @@ if (Astro.request.method === "POST") {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-	width: 100%;
+    width: 100%;
   }
   #username,
   #password,
@@ -139,7 +144,7 @@ if (Astro.request.method === "POST") {
     color: var(--white);
     font-size: 1rem;
     padding: 0.4rem 0.5rem;
-	width: 100%;
+    width: 100%;
   }
 
   label {

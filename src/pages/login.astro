@@ -56,8 +56,8 @@ if (Astro.request.method === "POST") {
   }
 }
 
-const session = await Astro.locals.auth.validate();
-if (session) return Astro.redirect("/main", 302); // redirect to profile page
+// const session = await Astro.locals.auth.validate();
+// if (session) return Astro.redirect("/main", 302); // redirect to profile page
 ---
 
 <Layout title="Margaro">
