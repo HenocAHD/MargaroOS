@@ -1,9 +1,17 @@
+---
+const session = await Astro.locals.auth.validate();
+---
+
 <header class="bar">
-  <section></section>
+  <section>
+    {session.user.username}
+  </section>
   <section id="calendar">
     <input type="date" />
   </section>
-  <section></section>
+  <form method="post" action="/logout">
+    <input type="submit" value="Sign out" />
+  </form>
 </header>
 
 <style>
@@ -16,12 +24,12 @@
     justify-content: space-between;
     align-items: center;
     position: fixed;
-    top: 0;
     width: 100%;
     height: 35px;
     background-color: var(--bg-black-terminal);
     color: var(--white);
     font-size: 0.8rem;
+    padding: 0 1rem;
   }
   #calendar {
     display: flex;

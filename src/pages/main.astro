@@ -5,10 +5,9 @@ import Layout from "../layouts/Layout.astro";
 import Calculator from "../components/Calculator.astro"
 
 // src/pages/index.astro
-// const session = await Astro.locals.auth.validate();
-// if (!session) return Astro.redirect("/login", 302);
+const session = await Astro.locals.auth.validate();
+if (!session) return Astro.redirect("/login", 302);
 
-//activar cuando este listo la entrada
 ---
 
 <Layout title="Margaro OS">

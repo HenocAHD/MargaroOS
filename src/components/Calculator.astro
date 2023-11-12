@@ -3,7 +3,7 @@ import TopWindow from "./TopWindow.astro";
 ---
 
 <section class="container-calc window">
-  <TopWindow title="Calculator" />
+  <TopWindow title="Calculadora" />
   <div class="calculadora">
     <div class="pantalla">0</div>
     <button id="c" class="btn">C</button>
@@ -141,13 +141,17 @@ import TopWindow from "./TopWindow.astro";
  //abrir y cerrar app
  const $app = document.querySelector(".container-calc") as HTMLElement
  const $btnApp = document.getElementById("btn-calculator")
- const $btnClose = document.getElementById("close-Calculator")
+ const $btnClose = document.getElementById("close-Calculadora")
+ const $workArea = document.getElementById("work-area");
+ import Calculator from './Calculator.astro'
 
  $btnApp.addEventListener('click', ()=>{
-  $app.classList.add("appear")
+  $app.classList.add("appear");
  })
 
  $btnClose.addEventListener("click", ()=>{
   $app.classList.remove("appear")
  })
+
+ 
 </script>
