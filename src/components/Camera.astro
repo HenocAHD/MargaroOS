@@ -1,0 +1,78 @@
+---
+import TopWindow from "./TopWindow.astro";
+---
+
+<section id="container" class="window-Camera">
+  <TopWindow title="Camera" />
+  <div id="miCameraOnline">
+    <video id="camera-feed" playsinline autoplay></video>
+    <button id="take-photo">Tomar Foto</button>
+    <canvas id="photo-canvas"></canvas>
+  </div>
+</section>
+
+<style>
+
+#container{
+    position: fixed;
+    top: 90px;
+    width: 800px;
+    height: 80vh;
+    background-color: white;
+    border-radius: 20px;
+}
+#camera-container {
+    text-align: center;
+}
+
+#camera-feed {
+    width: 800px;
+    border: 2px solid #333;
+}
+
+#take-photo {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#photo-canvas {
+    display: none;
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const cameraFeed = document.getElementById("camera-feed") as HTMLVideoElement;
+    const takePhotoButton = document.getElementById("take-photo") as HTMLButtonElement;
+    const photoCanvas = document.getElementById("photo-canvas") as HTMLCanvasElement;
+
+    // Acceder a la cámara
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            if (cameraFeed) {
+                cameraFeed.srcObject = stream;
+            }
+        })
+        .catch((error) => {
+            console.error("Error al acceder a la cámara: ", error);
+        });
+
+    // Tomar una foto
+    if (takePhotoButton && photoCanvas) {
+        takePhotoButton.addEventListener("click", function () {
+            const context = photoCanvas.getContext("2d");
+            if (context && cameraFeed) {
+                context.drawImage(cameraFeed, 0, 0, photoCanvas.width, photoCanvas.height);
+                photoCanvas.style.display = "block";
+                if (cameraFeed) {
+                    cameraFeed.style.display = "none";
+                }
+                takePhotoButton.style.display = "none";
+            }
+        });
+    }
+});
+</script>

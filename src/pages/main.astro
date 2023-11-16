@@ -6,6 +6,8 @@ import Calculator from "../components/Calculator.astro";
 import Snake from "../components/snake.astro";
 import Docs from "../components/Docs.astro";
 import Firefox from "../components/Firefox.astro";
+import Tetris from "../components/Tetris.astro";
+import Camera from "../components/Camera.astro";
 
 // src/pages/index.astro
 const session = await Astro.locals.auth.validate();
@@ -16,10 +18,10 @@ if (!session) return Astro.redirect("/login", 302);
   <main>
     <TopBar />
     <section id="work-area">
-        <Snake />
-        <Calculator />
-        <Docs/>
-        
+      <Snake />
+      <Calculator />
+      <Docs />
+      <Camera/>
     </section>
     <Dock />
   </main>
@@ -40,7 +42,3 @@ if (!session) return Astro.redirect("/login", 302);
     overflow: hidden;
   }
 </style>
-
-<script>
-
-</script>
