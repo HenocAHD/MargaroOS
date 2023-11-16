@@ -1,0 +1,267 @@
+---
+import TopWindow from "./TopWindow.astro";
+---
+
+<section id="container" class="window-Snake">
+  <TopWindow title="Snake" />
+  <canvas id="gameCanvas" width="400" height="400"></canvas>
+  <button id="new-game">new game</button>
+</section>
+
+<style>
+  #container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    background-color: var(--bg-black-terminal);
+    top: 90px;
+    left: 30%;
+    width: 400px;
+    border-radius: 15px;
+    transition: opacity .1s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #container.appear{
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  button{
+    background-color: var(--bg-gray-dark) ;
+    border: 0;
+    padding: 0.8rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--white);
+    font-weight: bold;
+    align-self: center;
+    transition: all .3s ease;
+  }
+</style>
+
+<script>
+  const $newGame = document.getElementById("new-game");
+  const $canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
+  const ctx = $canvas.getContext("2d");
+  let tileCount = 20;
+  let tileSize = 18;
+  let headX = 10;
+  let headY = 10;
+
+  // inicializamos la velociad de la serpiente
+  let velocityX = 0;
+  let velocityY = 0;
+
+  // propiedades de la manzana
+  let appleX = 5;
+  let appleY = 5;
+
+  // partes de la serpiente
+  let snakeParts = [];
+  let tailLength = 2;
+
+  // resultado
+  let score = 0;
+
+  // agregamos el evento que escuchara las flechas del teclado
+  document.body.addEventListener("keydown", keyDown);
+
+  class snakePart {
+    public x: number;
+    public y: number;
+
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+  }
+
+  // dibujar la pantalla pricipal del juego
+  function drawGame() {
+    let speed = 7;
+
+    changeSnakePosition();
+
+    // game over logic
+    let result = isGameOver();
+    if (result) {
+      // if result is true stop other following function from exucuting
+      return;
+    }
+
+    clearScreen();
+    drawSnake();
+    checkCollision();
+    drawApple();
+    drawScore();
+    setTimeout(drawGame, 1000 / speed);
+  }
+
+  // funcion para limpiar la pantalla
+  function clearScreen() {
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, $canvas.clientWidth, $canvas.clientHeight);
+  }
+
+  // funcion para dibujar la serpiente
+  function drawSnake() {
+    ctx.fillStyle = "orange";
+    ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
+
+    ctx.fillStyle = "green";
+    //loop through our snakeparts array
+    for (let i = 0; i < snakeParts.length; i++) {
+      //draw snake parts
+      let part = snakeParts[i];
+      ctx.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
+    }
+    snakeParts.push(new snakePart(headX, headY)); //put item at the end of list next to the head
+
+    if (snakeParts.length > tailLength) {
+      snakeParts.shift();
+    }
+  }
+
+  // funcion para dibujar la manzana
+  function drawApple() {
+    ctx.fillStyle = "red"; // make apple red
+    ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
+  }
+
+  // funciones para las flechas de las teclas
+  function keyDown(e) {
+    //flecha arriba
+    if (e.keyCode == 38) {
+      if (velocityY == 1) return;
+      velocityY = -1;
+      velocityX = 0;
+    }
+
+    //flecha abajo
+    if (e.keyCode == 40) {
+      if (velocityY == -1) return;
+      velocityY = 1;
+      velocityX = 0;
+    }
+
+    //flecha izquierda
+    if (e.keyCode == 37) {
+      if (velocityX == 1) return;
+      velocityY = 0;
+      velocityX = -1;
+    }
+
+    //flecha derecha
+    if (e.keyCode == 39) {
+      if (velocityX == -1) return;
+      velocityY = 0;
+      velocityX = 1;
+    }
+  }
+
+  //funcion para mover la serpiente
+  function changeSnakePosition() {
+    headX = headX + velocityX;
+    headY = headY + velocityY;
+  }
+
+  // funcion para detectar las colisiones
+  function checkCollision() {
+    if (appleX == headX && appleY == headY) {
+      appleX = Math.floor(Math.random() * tileCount);
+      appleY = Math.floor(Math.random() * tileCount);
+
+      tailLength++;
+      score++;
+    }
+  }
+
+  // funcion para dibujar el resultado
+  function drawScore() {
+    ctx.fillStyle = "white"; // set our text color to white
+    ctx.font = "10px verdena"; //set font size to 10px of font family verdena
+    ctx.fillText("Score: " + score, $canvas.clientWidth - 50, 10);
+  }
+
+  //funcion para cuando se finalize el juego
+  function isGameOver() {
+    let gameOver = false;
+    //check whether game has started
+    if (velocityY === 0 && velocityX === 0) {
+      return false;
+    }
+    if (headX < 0) {
+      //if snake hits left wall
+      gameOver = true;
+    } else if (headX === tileCount) {
+      //if snake hits right wall
+      gameOver = true;
+    } else if (headY < 0) {
+      //if snake hits wall at the top
+      gameOver = true;
+    } else if (headY === tileCount) {
+      //if snake hits wall at the bottom
+      gameOver = true;
+    }
+
+    //stop the game when snake bumps into itself
+
+    for (let i = 0; i < snakeParts.length; i++) {
+      let part = snakeParts[i];
+      if (part.x === headX && part.y === headY) {
+        //check whether any part of snake is occupying the same space
+        gameOver = true;
+        break; // to break out of for loop
+      }
+    }
+    //display text Game Over
+    if (gameOver) {
+      ctx.fillStyle = "white";
+      ctx.font = "50px verdana";
+      ctx.fillText(
+        "Game Over! ",
+        $canvas.clientWidth / 6.5,
+        $canvas.clientHeight / 2
+      ); //position our text in center
+    }
+
+    return gameOver; // this will stop the execution of the draw game method
+  }
+  drawGame();
+
+  $newGame.addEventListener("click", () => {
+    snakeParts = [];
+    tailLength = 2;
+    score = 0;
+
+    headX = 10;
+    headY = 10;
+
+    velocityX = 0;
+    velocityY = 0;
+
+    appleX = 5;
+    appleY = 5;
+
+    drawGame();
+  });
+
+
+// abrir y cerrar la app
+  const $app = document.querySelector(".window-Snake") as HTMLElement;
+  const $btnApp = document.getElementById("btn-Snake");
+  const $btnClose = document.getElementById("close-Snake");
+
+  $btnApp.addEventListener("click", () => {
+    $app.classList.add("appear");
+  });
+
+  $btnClose.addEventListener("click", () => {
+    $app.classList.remove("appear");
+  });
+</script>

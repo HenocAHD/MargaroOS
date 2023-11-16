@@ -12,6 +12,7 @@
   "dependencies": {
     "@lucia-auth/adapter-postgresql": "^2.0.2",
     "astro": "^3.4.3",
-    "lucia": "^2.7.3"
+    "lucia": "^2.7.3",
+    "tinymce": "^6.7.3"
   }
 }

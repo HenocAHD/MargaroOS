@@ -23,9 +23,16 @@ const { title } = Astro.props;
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.tiny.cloud/1/i9sw6888tnbx3bb7wt5i5o2drl9gohmo9ogwi03r1nunletv/tinymce/6/tinymce.min.js"
+      referrerpolicy="origin">
+    </script>
 
     <title>{title}</title>
   </head>
@@ -49,8 +56,6 @@ const { title } = Astro.props;
     box-sizing: inherit;
   }
 
-  
-
   /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
   /* Document
@@ -64,7 +69,7 @@ const { title } = Astro.props;
   html {
     line-height: 1.15; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
-    font-family: 'Comfortaa', sans-serif;
+    font-family: "Comfortaa", sans-serif;
     box-sizing: border-box;
     background-color: var(--bg-black);
   }

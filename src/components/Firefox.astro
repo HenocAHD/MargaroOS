@@ -1,0 +1,58 @@
+---
+import TopWindow from "./TopWindow.astro";
+
+---
+
+<section id="container-Firefox" class="window-firefox">
+    <TopWindow title="Firefox"/>
+    <div id="navbar">
+        <input type="text" id="urlInput" placeholder="Enter URL">
+        <button id="goButton" onclick="loadPage()">Go</button>
+    </div>
+    <div id="content">
+        <iframe id="browserFrame" width="100%" height="500px"></iframe>
+    </div>
+</section>
+
+<style>
+#container-Firefox{
+    position: absolute;
+    top: 90px;
+    left: 10%;
+    width: 90%;
+
+}
+
+    #navbar {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #urlInput {
+            width: 70%;
+            padding: 8px;
+        }
+
+        #goButton {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        #content {
+            margin-top: 20px;
+            padding: 20px;
+        }
+</style>
+
+<script>
+   function loadPage() {
+    const urlInput = document.getElementById("urlInput") as HTMLInputElement;
+    const browserFrame = document.getElementById("browserFrame") as HTMLIFrameElement;
+
+    const url = urlInput.value;
+    browserFrame.src = "https://" + url;
+}
+
+(window as any).loadPage = loadPage;
+</script>

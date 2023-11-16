@@ -2,8 +2,8 @@
 import TopWindow from "./TopWindow.astro";
 ---
 
-<section class="container-calc window">
-  <TopWindow title="Calculadora" />
+<section class="container-calc window-Calculator">
+  <TopWindow title="Calculator" />
   <div class="calculadora">
     <div class="pantalla">0</div>
     <button id="c" class="btn">C</button>
@@ -29,21 +29,21 @@ import TopWindow from "./TopWindow.astro";
 
 <style>
   .container-calc {
-    position: fixed;
+    position: absolute;
     background-color: var(--bg-black-terminal);
     top: 60px;
     left: 30%;
     width: 350px;
     border-radius: 15px;
-    transition: opacity 0.1s ease-out;
+    transition: opacity 0.1s ease-in-out;
     opacity: 0;
     pointer-events: none;
   }
 
-.container-calc.appear{
+  .container-calc.appear {
     opacity: 1;
     pointer-events: all;
-}
+  }
 
   .calculadora {
     background-color: #15173c;
@@ -137,21 +137,16 @@ import TopWindow from "./TopWindow.astro";
     });
   });
 
- 
- //abrir y cerrar app
- const $app = document.querySelector(".container-calc") as HTMLElement
- const $btnApp = document.getElementById("btn-calculator")
- const $btnClose = document.getElementById("close-Calculadora")
- const $workArea = document.getElementById("work-area");
- import Calculator from './Calculator.astro'
+  //abrir y cerrar app
+  const $app = document.querySelector(".container-calc") as HTMLElement;
+  const $btnApp = document.getElementById("btn-Calculator");
+  const $btnClose = document.getElementById("close-Calculator");
 
- $btnApp.addEventListener('click', ()=>{
-  $app.classList.add("appear");
- })
+  $btnApp.addEventListener("click", () => {
+    $app.classList.add("appear");
+  });
 
- $btnClose.addEventListener("click", ()=>{
-  $app.classList.remove("appear")
- })
-
- 
+  $btnClose.addEventListener("click", () => {
+    $app.classList.remove("appear");
+  });
 </script>
